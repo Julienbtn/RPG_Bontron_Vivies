@@ -7,9 +7,14 @@ import fr.polytech.apo.vivies_bontron.rpg.character.Caracteristic;
 
 public class Item {
 
-    private String name;
+    private final String name;
 
-    private int weigth;
+    private final int weigth;
+    
+    public Item(String name, int weight){
+        this.name=name;
+        this.weigth=weight;
+    }
 
     public int Item(String name, int weight) {
         throw new UnsupportedOperationException("Not supported yet.");

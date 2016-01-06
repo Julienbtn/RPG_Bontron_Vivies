@@ -7,8 +7,10 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
+        System.out.println("Début du jeu");
         String name;
         Character perso = null;
+        
         Scanner sc = new Scanner(System.in);
         System.out.println("Début du jeu");
         boolean arret = false;
@@ -18,7 +20,7 @@ public class Main {
             System.out.println("2. Voir personnage");
             System.out.println("3. Combattre");
             System.out.println("4. Chercher objet");
-            System.out.println("Quitter");
+            System.out.println("9. Quitter");
             int choix = sc.nextInt();
             switch (choix) {
                 case 1: {

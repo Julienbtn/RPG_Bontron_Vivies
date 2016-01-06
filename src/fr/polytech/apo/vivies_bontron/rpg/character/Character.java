@@ -10,17 +10,17 @@ import java.util.Map;
 
 public class Character {
 
-    private String name;
+    private final String name;
 
     protected Map carac;
 
     private int level;
 
-    private int maxweight;
+    private final int maxweight;
 
-    private int maxHEALTH;
+    private final int maxHEALTH;
 
-    private int maxSpeed;
+    private final int maxSpeed;
 
     public Character(String name) {
         this.name = name;
@@ -62,13 +62,8 @@ public class Character {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void calcMaxHEALTH() {
-    }
-
-    public void calcMaxSpeed() {
-    }
-
     public void addLevel() {
+        level=level+1;
     }
 
     public int sumCarac() {
