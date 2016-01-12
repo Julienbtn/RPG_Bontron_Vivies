@@ -1,6 +1,9 @@
 package fr.polytech.apo.vivies_bontron.rpg.action;
 
 
+import fr.polytech.apo.vivies_bontron.rpg.action.Capacity;
+
+
 public class Dodge implements Capacity {
 
     @Override

@@ -5,6 +5,7 @@ import fr.polytech.apo.vivies_bontron.rpg.item.Weapon;
 import fr.polytech.apo.vivies_bontron.rpg.item.Item;
 import fr.polytech.apo.vivies_bontron.rpg.item.Gear;
 import fr.polytech.apo.vivies_bontron.rpg.action.Effect;
+import static fr.polytech.apo.vivies_bontron.rpg.character.Caracteristic.*;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ public class Character {
 
     private final String name;
 
-    protected Map carac;
+    protected Map caracteristic;
 
     private int level;
 
@@ -24,10 +25,10 @@ public class Character {
 
     public Character(String name) {
         this.name = name;
-        this.carac = new EnumMap<>(Caracteristic.class);
-        carac.put(Caracteristic.STRENGHT, 10);
-        carac.put(Caracteristic.SPEED, 10);
-        carac.put(Caracteristic.HEALTH, 100);
+        this.caracteristic = new EnumMap<>(Caracteristic.class);
+        caracteristic.put(STRENGHT, 10);
+        caracteristic.put(Caracteristic.SPEED, 10);
+        caracteristic.put(Caracteristic.HEALTH, 100);
         this.level = 0;
         this.maxweight = 100;
         this.maxHEALTH = 100;
@@ -68,6 +69,14 @@ public class Character {
 
     public int sumCarac() {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    public int getSpeed(){
+        return (int) caracteristic.get(SPEED);
+    }
+    
+    public int getHealth(){
+        return (int) caracteristic.get(HEALTH);
     }
 
     public int getCaracValue(int Caracteristic) {

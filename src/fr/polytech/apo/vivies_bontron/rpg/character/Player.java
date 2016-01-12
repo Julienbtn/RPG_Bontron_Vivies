@@ -1,14 +1,12 @@
 package fr.polytech.apo.vivies_bontron.rpg.character;
 
-
 import fr.polytech.apo.vivies_bontron.rpg.action.Action;
 
-
-public class Player {
+abstract class Player {
 
     private Object untitledField;
-
+// abstraite car ce sont les enfants (humaine et ia qui l'implémentent, pas le parent)
     public Action act() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
     }
 }

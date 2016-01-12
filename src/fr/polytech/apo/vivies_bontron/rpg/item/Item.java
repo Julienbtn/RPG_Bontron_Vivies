@@ -1,7 +1,9 @@
 package fr.polytech.apo.vivies_bontron.rpg.item;
 
+
 import fr.polytech.apo.vivies_bontron.rpg.action.Effect;
 import fr.polytech.apo.vivies_bontron.rpg.character.Caracteristic;
+
 
 public class Item {
 
