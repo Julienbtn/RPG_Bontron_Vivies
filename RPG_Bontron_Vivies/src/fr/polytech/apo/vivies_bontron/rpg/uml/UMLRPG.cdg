@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="UMLRPG">
+  <ClassDiagramComponents>
+    <Class name="Character" package="" visibility="public" xPosition="410.0" yPosition="109.0">
+      <Fields>
+        <Field name="name" type="String" visibility="private"/>
+        <Field name="caracteristic" type="Map" visibility="private"/>
+        <Field name="level" type="int" visibility="private"/>
+        <Field name="maxweight" type="int" visibility="private"/>
+        <Field name="maxHEALTH" type="int" visibility="private"/>
+        <Field name="maxSpeed" type="int" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="applyEffect" returnType="Effect" visibility="public">
+          <Argument type="Effect" name="effect"/>
+        </Method>
+        <Method name="equipWeapon" returnType="Weapon" visibility="public">
+          <Argument type="Weapon" name="weapon"/>
+        </Method>
+        <Method name="equipGear" returnType="Gear" visibility="public">
+          <Argument type="Gear" name="gear"/>
+        </Method>
+        <Method name="getInventoryWeight" returnType="int" visibility="public"/>
+        <Method name="throwItem" returnType="Item" visibility="public">
+          <Argument type="Item" name="item"/>
+        </Method>
+        <Method name="addItem" returnType="Item" visibility="public">
+          <Argument type="Item" name="item"/>
+        </Method>
+        <Method name="calcMaxHEALTH" returnType="void" visibility="public"/>
+        <Method name="calcMaxSpeed" returnType="void" visibility="public"/>
+        <Method name="addLevel" returnType="void" visibility="public"/>
+        <Method name="sumCarac" returnType="int" visibility="public"/>
+        <Method name="getCaracValue" returnType="int" visibility="public">
+          <Argument type="int" name="Caracteristic"/>
+        </Method>
+        <Method name="Caracteristics" returnType="int" visibility="public"/>
+        <Method name="checkCaracteristics" returnType="int" visibility="public"/>
+        <Method name="Capacity" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Player" package="" visibility="public" xPosition="197.0" yPosition="109.0">
+      <Fields>
+        <Field name="untitledField" type="Object" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="act" returnType="Action" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Human" package="" visibility="public" xPosition="-21.0" yPosition="183.0">
+      <Fields/>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="IA" package="" visibility="public" xPosition="-21.0" yPosition="87.0">
+      <Fields/>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Heal" package="" visibility="public" xPosition="213.0" yPosition="494.0">
+      <Fields/>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Dodge" package="" visibility="public" xPosition="39.0" yPosition="520.0">
+      <Fields/>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Attack" package="" visibility="public" xPosition="-132.0" yPosition="520.0">
+      <Fields/>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Action" package="" visibility="public" xPosition="74.0" yPosition="630.0">
+      <Fields>
+        <Field name="target" type="Charac" visibility="private"/>
+        <Field name="src" type="Charac" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Consumable" package="" visibility="public" xPosition="417.0" yPosition="733.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="Consumable" returnType="int" visibility="public">
+          <Argument type="string" name="name"/>
+          <Argument type="int" name="weigth"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Round" package="" visibility="public" xPosition="74.0" yPosition="782.0">
+      <Fields/>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Item" package="" visibility="public" xPosition="743.0" yPosition="572.0">
+      <Fields>
+        <Field name="name" type="string" visibility="private"/>
+        <Field name="weigth" type="int" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="Item" returnType="int" visibility="public">
+          <Argument type="string" name="name"/>
+          <Argument type="int" name="weight"/>
+        </Method>
+        <Method name="getEffectValue" returnType="Caracteristique" visibility="public">
+          <Argument type="Caracteristique" name="Caracteristique"/>
+        </Method>
+        <Method name="addEffect" returnType="Effect" visibility="public">
+          <Argument type="Effect" name="Efefct"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Gear" package="" visibility="public" xPosition="391.0" yPosition="610.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="Gear" returnType="int" visibility="public">
+          <Argument type="string" name="name"/>
+          <Argument type="int" name="weight"/>
+          <Argument type="int" name="resistance"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Effect" package="" visibility="public" xPosition="882.0" yPosition="782.0">
+      <Fields>
+        <Field name="c" type="Caracteristic" visibility="private"/>
+        <Field name="value" type="int" visibility="private"/>
+        <Field name="permanent" type="int" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Weapon" package="" visibility="public" xPosition="852.0" yPosition="355.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="Weapon" returnType="int" visibility="public">
+          <Argument type="string" name="name"/>
+          <Argument type="int" name="weight"/>
+          <Argument type="int" name="damage"/>
+          <Argument type="int" name="heal"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Warrior" package="" visibility="public" xPosition="1013.0" yPosition="147.0">
+      <Fields/>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Athlete" package="" visibility="public" xPosition="882.0" yPosition="252.0">
+      <Fields/>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Interface name="Capacity" package="" visibility="public" xPosition="114.0" yPosition="355.0">
+      <Methods>
+        <Method name="Effect" returnType="Charac" visibility="public">
+          <Argument type="Charac" name="src"/>
+          <Argument type="Charac" name="target"/>
+        </Method>
+        <Method name="accuracy" returnType="double" visibility="public"/>
+      </Methods>
+    </Interface>
+    <Enum name="Caracteristic" package="" visibility="public" xPosition="789.0" yPosition="54.0">
+      <Literals>
+        <Literal name="STRENGHT"/>
+        <Literal name="SPEED"/>
+        <Literal name="HEALTH"/>
+        <Literal name="DEFENSE"/>
+      </Literals>
+    </Enum>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="can use" source="Action" target="Consumable" type="Default" sourceCardinality="0..1" targetCardinality="0..1"/>
+    <HasRelation name="uses" source="Character" target="Item" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="have" source="Character" target="Caracteristic" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="uses" source="Character" target="Weapon" type="Default" sourceCardinality="0..1" targetCardinality="0..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="Dodge" target="Capacity"/>
+    <IsRelation name="is" source="Consumable" target="Item"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="Heal" target="Capacity"/>
+    <IsRelation name="is" source="Weapon" target="Item"/>
+    <HasRelation name="uses" source="Character" target="Gear" type="Default" sourceCardinality="0..1" targetCardinality="0..*" collectionType="List"/>
+    <HasRelation name="give" source="Consumable" target="Effect" type="Default" sourceCardinality="0..1" targetCardinality="0..*" collectionType="List"/>
+    <IsRelation name="is" source="IA" target="Player"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="Attack" target="Capacity"/>
+    <IsRelation name="is" source="Warrior" target="Character"/>
+    <IsRelation name="is" source="Human" target="Player"/>
+    <IsRelation name="is" source="Gear" target="Item"/>
+    <HasRelation name="control character" source="Player" target="Character" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="Athlete" target="Character"/>
+    <HasRelation name="can use" source="Action" target="Capacity" type="Default" sourceCardinality="0..1" targetCardinality="0..1"/>
+    <HasRelation name="contain" source="Round" target="Action" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
