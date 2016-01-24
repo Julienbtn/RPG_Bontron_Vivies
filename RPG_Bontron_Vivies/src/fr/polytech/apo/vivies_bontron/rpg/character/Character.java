@@ -19,6 +19,7 @@ public class Character {
     private Weapon weaponequiped;
     private Gear gearequiped;
     private List<Item> inventory;
+    private int defFight;
 
  
        public Character(String name) {
@@ -33,12 +34,12 @@ public class Character {
         this.maxHEALTH = 100;
         this.maxSpeed = 100;
     }
-    public Character(String name, int strength, int speed, int defense) {
+    public Character(String name, int strength, int speed, int defense, int health) {
         this.name = name;
         this.caracteristic = new EnumMap<>(Caracteristic.class);
         caracteristic.put(STRENGTH, strength);
         caracteristic.put(SPEED, speed);
-        caracteristic.put(HEALTH, 100);
+        caracteristic.put(HEALTH, health);
         caracteristic.put(DEFENSE, defense);
         this.level = 1;
         this.maxweight = 100;
@@ -47,7 +48,7 @@ public class Character {
     }
 
     public String getInfo() {
-        return (getName()+"\n"+"FORCE :"+getStrength()+"\n"+"SPEED :"+getSpeed()+"\n"+"HEALTH :"+getHealth()+"\n"+"DEFENCE :"+getDefense());
+        return (getName()+ "\n FORCE :"+getStrength()+"\n SPEED :"+getSpeed()+"\n HEALTH :"+getHealth()+"\n DEFENCE :"+getDefense());
     }
 
     public Effect applyEffect(Effect effect) {
@@ -62,14 +63,14 @@ public class Character {
         getCaracteristic().put(Caracteristic.STRENGTH, this.getStrength() + weapon.getDamage());
     }
 
-    public void equipGear(Gear gear, Character player) {
+    public void equipGear(Gear gear) {
         if (getWeaponequiped() != null) {
-            getCaracteristic().put(Caracteristic.DEFENSE, player.getStrength() - getGearequiped().getResistance());
-            getCaracteristic().put(Caracteristic.SPEED, player.getStrength() - getGearequiped().getDexterity());
+            getCaracteristic().put(Caracteristic.DEFENSE, this.getStrength() - getGearequiped().getResistance());
+            getCaracteristic().put(Caracteristic.SPEED, this.getStrength() - getGearequiped().getDexterity());
         }
         this.gearequiped = gear;
-        getCaracteristic().put(Caracteristic.DEFENSE, player.getStrength() + getGearequiped().getResistance());
-        getCaracteristic().put(Caracteristic.SPEED, player.getStrength() + getGearequiped().getDexterity());
+        getCaracteristic().put(Caracteristic.DEFENSE, this.getStrength() + getGearequiped().getResistance());
+        getCaracteristic().put(Caracteristic.SPEED, this.getStrength() + getGearequiped().getDexterity());
     }
 
     public int getInventoryWeight() {
@@ -84,13 +85,30 @@ public class Character {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void addLevel() {
+      public void addLevel(Character hero) {
         // rajouter int experience. quand experience =100 on fait level=level+1
         level = level + 1;
-        getCaracteristic().put(Caracteristic.DEFENSE, getDefense() + 1);
-        getCaracteristic().put(Caracteristic.STRENGTH, getStrength() + 1);
-        getCaracteristic().put(Caracteristic.SPEED, getSpeed() + 1);
-        getCaracteristic().put(Caracteristic.HEALTH, getHealth() + 1);
+        int range = (int) (Math.random() * 2) ;
+        if (hero instanceof Archer) {
+            getCaracteristic().put(Caracteristic.DEFENSE, getDefense() + (2+range));
+            getCaracteristic().put(Caracteristic.STRENGTH, getStrength() + (3+range));
+            getCaracteristic().put(Caracteristic.SPEED, getSpeed() + (3+range));
+            getCaracteristic().put(Caracteristic.HEALTH, getHealth() + 20-(2*(3+range)+2+range));
+            }
+            
+        if (hero instanceof Warrior) {
+            getCaracteristic().put(Caracteristic.DEFENSE, getDefense() + (3+range));
+            getCaracteristic().put(Caracteristic.STRENGTH, getStrength() + (2+range));
+            getCaracteristic().put(Caracteristic.SPEED, getSpeed() + (1+range));
+            getCaracteristic().put(Caracteristic.HEALTH, getHealth() + 20-((2+range)+(3+range)+(1+range)));
+            }
+            
+        if (hero instanceof LightMage) {
+            getCaracteristic().put(Caracteristic.DEFENSE, getDefense() + (3+range));
+            getCaracteristic().put(Caracteristic.STRENGTH, getStrength() + (1+range));
+            getCaracteristic().put(Caracteristic.SPEED, getSpeed() + (3+range));
+            getCaracteristic().put(Caracteristic.HEALTH, getHealth() + 20-(2*(3+range)+1+range));
+            }
     }
 
     public int sumCarac() {
@@ -189,5 +207,19 @@ public class Character {
      */
     public void setInventory(List<Item> inventory) {
         this.inventory = inventory;
+    }
+
+    /**
+     * @return the defFight
+     */
+    public int getDefFight() {
+        return defFight;
+    }
+
+    /**
+     * @param defFight the defFight to set
+     */
+    public void setDefFight(int defFight) {
+        this.defFight = defFight;
     }
 }

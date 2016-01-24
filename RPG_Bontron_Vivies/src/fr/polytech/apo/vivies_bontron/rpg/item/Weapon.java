@@ -28,4 +28,12 @@ public class Weapon extends Item {
     public void setDamage(int damage) {
         this.damage = damage;
     }
+
+    /**
+     * @return the heal
+     */
+    public int getHeal() {
+        return heal;
+    }
+
 }

@@ -25,7 +25,7 @@ public class Item {
     }
 
     public void addEffect(Effect effect) {
-        this.effect = effect;
+        this.setEffect(effect);
     }
 
     /**
@@ -33,5 +33,12 @@ public class Item {
      */
     public Effect getEffect() {
         return effect;
+    }
+
+    /**
+     * @param effect the effect to set
+     */
+    public void setEffect(Effect effect) {
+        this.effect = effect;
     }
 }

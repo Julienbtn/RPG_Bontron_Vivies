@@ -18,4 +18,25 @@ public class Effect {
     void effect() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    /**
+     * @return the permanent
+     */
+    public int getPermanent() {
+        return permanent;
+    }
+
+    /**
+     * @return the value
+     */
+    public int getValue() {
+        return value;
+    }
+
+    /**
+     * @return the c
+     */
+    public Caracteristic getC() {
+        return c;
+    }
 }

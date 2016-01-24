@@ -1,9 +1,13 @@
 package fr.polytech.apo.vivies_bontron.rpg.event;
 
+import fr.polytech.apo.vivies_bontron.rpg.action.Attack;
 import fr.polytech.apo.vivies_bontron.rpg.action.Capacity;
+import fr.polytech.apo.vivies_bontron.rpg.action.Effect;
 import fr.polytech.apo.vivies_bontron.rpg.character.Human;
 import fr.polytech.apo.vivies_bontron.rpg.character.IA;
 import fr.polytech.apo.vivies_bontron.rpg.item.Consumable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Round {
 
@@ -19,24 +23,31 @@ public class Round {
         this.consumable = consumable;
     }
 
-    public void roll(Human human, IA ia, Object object) {
+    public List<Effect> roll(Human human, IA ia, Object object) {
+        Effect effectHero = null;
+        Effect effectMonstre = null;
         if (human.getSpeed() > ia.getSpeed()) {
-            human.act(object, ia);
+            effectMonstre = human.act(object, ia);
             if (ia.getHealth() > 0 && human.getHealth() > 0) {
-                ia.act(object, human);
+                effectHero = ia.act(new Attack(), human);
             }
         } else {
-            ia.act(object, human);
+            effectHero = ia.act(new Attack(), human);
             if (human.getHealth() > 0) {
-                human.act(object, ia);
+                effectMonstre = human.act(object, ia);
             }
         }
         if (human.getHealth() <= 0 && ia.getHealth() > 0) {
             System.out.println("Game Over");
         } else if (ia.getHealth() <= 0) {
-            human.addLevel();
+            human.addLevel(human);
             System.out.println("VICTOIRE ! Vous avez remporté votre combat et gagné un niveau !");
-            System.out.println(human.getInfo());
+            System.out.println("Nouvelles statistiques de " + human.getInfo() + "\n");
         }
+        
+        List<Effect> listEffect = new ArrayList<Effect>();
+        listEffect.add(effectHero);
+        listEffect.add(effectMonstre);
+        return listEffect;
     }
 }

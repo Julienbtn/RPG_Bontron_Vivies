@@ -3,6 +3,9 @@ package fr.polytech.apo.vivies_bontron.rpg.action;
 import fr.polytech.apo.vivies_bontron.rpg.character.Caracteristic;
 import fr.polytech.apo.vivies_bontron.rpg.item.Consumable;
 import fr.polytech.apo.vivies_bontron.rpg.character.Character;
+import fr.polytech.apo.vivies_bontron.rpg.character.Human;
+import fr.polytech.apo.vivies_bontron.rpg.character.LightMage;
+import java.util.Scanner;
 
 public class Action {
 
@@ -28,20 +31,23 @@ public class Action {
         this.consumable = consumable;
     }
 
-    public void doAction() {
+    public Effect doAction() {
+        Effect effect = null;
         if (capacity == null) {
-             src.getCaracteristic().put(Caracteristic.HEALTH, target.getHealth() + consumable.getPointdevie());
+            src.getCaracteristic().put(Caracteristic.HEALTH, target.getHealth() + consumable.getPointdevie());
         }
         if (consumable == null) {
             if (capacity instanceof Attack) {
-                ((Attack) capacity).effect(src, target);
+                effect = ((Attack) capacity).effect(src, target);
             }
             if (capacity instanceof Block) {
-                ((Block) capacity).effect(src, target);
+                effect = ((Block) capacity).effect(src, target);
             }
             if (capacity instanceof Heal) {
-                ((Heal) capacity).effect(src, target);
+                effect = ((Heal) capacity).effect(src, target);
             }
         }
+        return effect;
     }
+        
 }
