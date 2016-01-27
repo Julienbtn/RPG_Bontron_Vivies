@@ -36,4 +36,9 @@ public class Weapon extends Item {
         return heal;
     }
 
+    public String getName() {
+   
+        return this.name;
+    }
+
 }

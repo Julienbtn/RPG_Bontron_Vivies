@@ -1,75 +1,17 @@
 package fr.polytech.apo.vivies_bontron.rpg;
 
-import fr.polytech.apo.vivies_bontron.rpg.action.Attack;
-import fr.polytech.apo.vivies_bontron.rpg.action.Block;
-import fr.polytech.apo.vivies_bontron.rpg.action.Effect;
-import fr.polytech.apo.vivies_bontron.rpg.action.Heal;
 import fr.polytech.apo.vivies_bontron.rpg.character.Archer;
-import fr.polytech.apo.vivies_bontron.rpg.character.Caracteristic;
 import fr.polytech.apo.vivies_bontron.rpg.character.Human;
 import fr.polytech.apo.vivies_bontron.rpg.character.IA;
 import fr.polytech.apo.vivies_bontron.rpg.character.LightMage;
 import fr.polytech.apo.vivies_bontron.rpg.character.Warrior;
-import fr.polytech.apo.vivies_bontron.rpg.event.Round;
-import fr.polytech.apo.vivies_bontron.rpg.item.Consumable;
-import fr.polytech.apo.vivies_bontron.rpg.item.Gear;
+import fr.polytech.apo.vivies_bontron.rpg.event.Fight;
 import fr.polytech.apo.vivies_bontron.rpg.item.Weapon;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
     private static Human hero;
-
-    private static Object choseAction() {
-        int choice;
-        boolean garbage = false;
-        Object action = null;
-        while (garbage == false) {
-            garbage = true;
-            System.out.println("Choisissez une action.");
-            System.out.println("Attaque : taper 1");
-            System.out.println("Défense : taper 2");
-            System.out.println("Consommable : taper 3");
-            if (hero instanceof LightMage) {
-                System.out.println("Soin : taper 4");
-            }
-            Scanner scanInC = new Scanner(System.in);
-            choice = scanInC.nextInt();
-            switch (choice) {
-                case 1:
-                    action = new Attack();
-                    break;
-                case 2:
-                    action = new Block();
-                    break;
-                case 4:
-                    if (hero instanceof LightMage) {
-                        action = new Heal();
-                    } else {
-                        garbage = false;
-                    }
-                    break;
-                case 3:
-                    boolean check = false;
-                    for (int i = 0; i < hero.getInventory().size(); i++) {
-                        if (hero.getInventory().get(i) instanceof Consumable) {
-                            check = true;
-                        }
-                    }
-                    if (check == true) {
-                        action = new Consumable("Eau de vie", 10, 10);
-                    } else {
-                        garbage = false;
-                    }
-                    break;
-                default:
-                    garbage = false;
-            }
-        }
-        return action;
-    }
 
     public static void main(String[] args) {
         //Scénario
@@ -100,149 +42,109 @@ public class Main {
             Scanner scanInC = new Scanner(System.in);
             classe = scanInC.nextInt();
         } while (classe != 1 && classe != 2 && classe != 3);
-        if (classe == 1) {
-            hero = new Warrior(nom, 7, 7, 5, 50);
-            System.out.println(hero.getInfo());
-            Weapon arme1 = new Weapon("Epée de bois", 5, 6, 0);
-            hero.equipWeapon(arme1);
-            Gear armure1 = new Gear ("Chemise en cuir",3,2,2);
-            hero.equipGear(armure1);
-            System.out.println("Vous avez équipé : Epée de bois et Chemise en cuir.");
-            System.out.println("Dégâts : " + arme1.getDamage()+"\n"+"Armure :"+armure1.getResistance());
-
-        } else if (classe == 2) {
-            hero = new Archer(nom, 9, 10, 3, 45);
-            System.out.println(hero.getInfo());
-            Weapon arme2 = new Weapon("Arc et flèches de bois", 3, 8, 0);
-            hero.equipWeapon(arme2);
-            System.out.println("Vous avez équipé : Arc et flèches de bois.");
-            System.out.println("Dégâts : " + arme2.getDamage());
-        } else if (classe == 3) {
-            hero = new LightMage(nom, 5, 9, 7, 40);
-            System.out.println(hero.getInfo());
-            Weapon arme3 = new Weapon("Bâton cristalisé faible", 4, 2, 10);
-            hero.equipWeapon(arme3);
-            System.out.println("Vous avez équipé : Bâton cristalisé faible.");
-            System.out.println("Dégâts : " + arme3.getDamage() + "\n");
+        switch (classe) {
+            case 1:
+                hero = new Warrior(nom, 7, 7, 5, 50);
+                System.out.println(hero.getInfo());
+                hero.giveEquipmentHuman(hero, "Epée de bois", "Plastron fragile", "Bottes usées", 5, 5, 3, 6, 0, 5, 2);
+                break;
+            case 2:
+                hero = new Archer(nom, 9, 10, 3, 45);
+                System.out.println(hero.getInfo());
+                hero.giveEquipmentHuman(hero, "Arc de bois", "Chemise en cuir", "Bottes en cuir", 4, 4, 2, 9, 0, 3, 4);
+                break;
+            case 3:
+                hero = new LightMage(nom, 5, 9, 7, 40);
+                System.out.println(hero.getInfo());
+                Weapon arme3 = new Weapon("Bâton cristalisé faible", 4, 2, 10);
+                hero.giveEquipmentHuman(hero, "Bâton gemme faible", "Toge de chanvre", "Bottes en tissu", 4, 2, 1, 2, 10, 2, 3);
+                break;
+            default:
+                break;
         }
 
         // Ecriture du scénario pour arriver sur le premier combat
         System.out.println("Vous êtes parti en direction du Palais Noir, où se situe Valentine sur son trône.\n"
                 + "Nul doute que ses sous-fifres vont vous barrer la route. Vous devrez les défaire, un par un.\n"
-                + "Alors que l'effroi vous envahi, votre première adversaire vous aggresse.");
-        String nomMonstre1 = "Rat carnivore";//="nom du monstre"
+                + "Alors que l'effroi vous envahi, votre première adversaire vous aggresse.\n");
+
+        String nomMonstre1 = "Rat carnivore";
         System.out.println("Vous est attaqué par " + nomMonstre1 + ". Vous devez le combattre pour continuer votre périple.");
         System.out.println("Début du combat \n");
         IA monstre1 = new IA(nomMonstre1, 3, 10, 3, 30);
-        Weapon arme4 = new Weapon("griffes", 0, 5, 0);
-        monstre1.equipWeapon(arme4);
+        monstre1.giveEquipmentIA(monstre1, "Petites griffes", 5);
         
+        int nbCombat = 1;
+        Fight combat1 = new Fight(hero, monstre1);
+        hero.amelioration(nbCombat);
 
-        //Lancement du combat 1
-        int numeroround = 1;
-        List<Integer> listTimoutEffect = new ArrayList<Integer>();
-        listTimoutEffect.add(0);
-        listTimoutEffect.add(0);
-        List<Effect> listEffectIn = new ArrayList<Effect>();
-        listEffectIn.add(null);
-        listEffectIn.add(null);
-        hero.setDefFight(hero.getDefense());
-        monstre1.setDefFight(monstre1.getDefense());
-        while (hero.getHealth() > 0 && monstre1.getHealth() > 0) {
-            Object object = choseAction();
-            Round r1 = new Round();
-            System.out.println("ROUND " + numeroround);
-            List<Effect> listEffect = r1.roll(hero, monstre1, object);
-            for (int i=0;i>=1;i++) {
-                if (listEffectIn.get(i) == null) {
-                    if(listEffectIn.get(i) != null) {
-                        listEffectIn.set(i, listEffect.get(i));
-                        listTimoutEffect.set(i, listEffectIn.get(i).getPermanent());
-                    }
-                } else {
-                    if (i == 0) {
-                        hero.getCaracteristic().put(listEffectIn.get(i).getC(), hero.getHealth() - listEffectIn.get(i).getValue());
-                    } else if (i == 1) {
-                        monstre1.getCaracteristic().put(Caracteristic.HEALTH, monstre1.getHealth() - listEffectIn.get(i).getValue());
-                    }
-                    
-                    listTimoutEffect.set(i, listTimoutEffect.get(i)-1);
-                }
-                if (listTimoutEffect.get(i) <= 0 && listEffectIn.get(i) != null) {
-                    listEffectIn.set(i, null);
-                }
-            } 
-            numeroround++;
-        }
-        if (hero instanceof Warrior) {
-            Weapon arme5 = new Weapon("Epée de fer", 7, 9, 0);
-            System.out.println("Vous avez reçu : Epée de fer");
-            hero.equipWeapon(arme5);
-        } else if (hero instanceof Archer) {
-            Weapon arme5 = new Weapon("Arc solide", 6, 12, 0);
-            System.out.println("\n Vous avez reçu : Arc solide");
-            hero.equipWeapon(arme5);
-        } else {
-            Weapon arme5 = new Weapon("Baton mana", 7, 6, 12);
-            System.out.println("\n Vous avez reçu : Bâton mana");
-            hero.equipWeapon(arme5);
-        }
         System.out.println("A peine remis de votre victoire, un deuxième ennemi tente de vous lacérer par surprise, quelques mètres plus loin.\n"
-                + "Esquivant le coup fatal de justesse, vous vous mettez en position de combat. Vous savez désormais ce que vous avez à faire.");
+                + "Esquivant le coup fatal de justesse, vous vous mettez en position de combat. Vous savez désormais ce que vous avez à faire.\n");
 
-        String nomMonstre2 = "Ours griffe de sabre";//="nom du monstre"
+        String nomMonstre2 = "Ours griffe de sabre";
         System.out.println("Vous est attaqué par " + nomMonstre2 + ". Vous devez le combattre pour continuer votre périple.");
         System.out.println("Début du combat \n");
         IA monstre2 = new IA(nomMonstre2, 6, 8, 6, 60);
-        Weapon arme6 = new Weapon("griffes acérées", 0, 6, 0);
-        monstre2.equipWeapon(arme6);
+        monstre2.giveEquipmentIA(monstre2, "Griffes acérées", 8);
+        Fight combat2 = new Fight(hero, monstre2);
+        nbCombat++;
+        hero.amelioration(nbCombat);
+
+         System.out.println("Vous continuez votre route. Réalisant que vous êtes épuisé, vous décidez de prendre un peu de répit. Vous vous installez aussi confortablement que possible contre un rocher...\n"
+                 + "Vous reprenez votre souffle et regagnez votre sang froid. Tellement, que vos paupières deviennent lourdes. La torpeur vous assaillit et vous ne la combattez pas...\n"
+                 + "Soudainement, vous sentez sur votre peau une brise qui vous donne la chair de poule, comme à chaque que fois que le mal vous approche. Il ne vous faut pas plus de temps pour vous mettre sur vos pieds\n"
+                 + "et remarquer qu'une nouvelle créature lorgne votre mort. Le son d'un hurlement d'ogre enragé parvient à vos oreilles et avec lui, le glas d'un nouveau combat.\n");
         
-        numeroround = 1;
-        hero.setDefFight(hero.getDefense());
-        monstre2.setDefFight(monstre2.getDefense());
-        while (hero.getHealth() > 0 && monstre2.getHealth() > 0) {
-            Object object = choseAction();
-            Round r1 = new Round();
-            System.out.println("ROUND " + numeroround);
-            r1.roll(hero, monstre2, object);
-            numeroround++;
-        }
-            
-            if (hero instanceof Warrior) {
-            Weapon arme7 = new Weapon("Epée incendiaire", 10, 12, 0);
-            System.out.println("Vous avez reçu : Epée incendiaire");
-            hero.equipWeapon(arme7);
-        } else if (hero instanceof Archer) {
-            Weapon arme7 = new Weapon("Arc et flèches-éclair", 6, 18, 0);
-            System.out.println("Vous avez reçu : Arc et flèches-éclair");
-            hero.equipWeapon(arme7);
-        } else {
-            Weapon arme7 = new Weapon("Bâton magma cristallisé moyen", 7, 8, 14);
-            System.out.println("\n Vous avez reçu : Bâton magma cristallisé moyen");
-            hero.equipWeapon(arme7);
-        }
-            System.out.println("Le reste de la route de déroule sans réel soucis. Le Palais Noir vous tend les portes et Valentine vous dévisage assise sur son trône.\n"
-                    + "Elle vous attaque avec ses ombres mais vous êtes préparé.\n");
-        
-            
-        String nomMonstre3 = "Valentine";//="nom du monstre"
+         String nomMonstre3 = "Ogre";
         System.out.println("Vous est attaqué par " + nomMonstre3 + ". Vous devez le combattre pour continuer votre périple.");
         System.out.println("Début du combat \n");
-        IA monstre3 = new IA(nomMonstre3, 25, 25, 25, 100);
-        Weapon arme8 = new Weapon("ombres tueuses", 0, 10, 0);
-        monstre3.equipWeapon(arme8);
+        IA monstre3 = new IA(nomMonstre3, 10, 10, 9, 65);
+        monstre2.giveEquipmentIA(monstre3, "Gourdin énorme", 9);
+        Fight combat3 = new Fight(hero, monstre3);
+        nbCombat++;
+        hero.amelioration(nbCombat);
+
+        String nomMonstre4 = "Dragon des cavernes";
+        System.out.println("Vous est attaqué par " + nomMonstre4 + ". Vous devez le combattre pour continuer votre périple.");
+        System.out.println("Début du combat \n");
+        IA monstre4 = new IA(nomMonstre4, 15, 12, 13, 80);
+        Weapon arme9 = new Weapon("Flames bleues", 0, 8, 0);
+        monstre4.equipWeapon(arme9);
+        Fight combat4 = new Fight(hero, monstre4);
+        nbCombat++;
+        hero.amelioration(nbCombat);
         
-        numeroround = 1;
-        hero.setDefFight(hero.getDefense());
-        monstre3.setDefFight(monstre3.getDefense());
-        while (hero.getHealth() > 0 && monstre3.getHealth() > 0) {
-            Object object = choseAction();
-            Round r1 = new Round();
-            System.out.println("ROUND " + numeroround);
-            r1.roll(hero, monstre3, object);
-            numeroround++;
-        }
- 
+        String nomMonstre5 = "Lion à deux têtes";
+        System.out.println("Vous est attaqué par " + nomMonstre5 + ". Vous devez le combattre pour continuer votre périple.");
+        System.out.println("Début du combat \n");
+        IA monstre5 = new IA(nomMonstre5, 18, 10, 11, 85);
+        Weapon arme11 = new Weapon("crocs accéreés", 0, 8, 3);
+        monstre5.equipWeapon(arme11);
+        Fight combat5 = new Fight(hero,monstre5);
+        nbCombat++;
+        hero.amelioration(nbCombat);
+        
+        String nomMonstre6 = "Gardien du Palais noir";
+        System.out.println("Vous est attaqué par " + nomMonstre6 + ". Vous devez le combattre pour continuer votre périple.");
+        System.out.println("Début du combat \n");
+        IA monstre6 = new IA(nomMonstre6, 20, 13, 12, 90);
+        Weapon arme12 = new Weapon("Epée du démon", 0, 9, 4);
+        monstre6.equipWeapon(arme12);
+        Fight combat6 = new Fight(hero,monstre6);
+        nbCombat++;
+        hero.amelioration(nbCombat);
+
+         System.out.println("Le reste de la route se déroule sans réel soucis. Le Palais Noir vous tend les portes et Valentine vous dévisage assise sur son trône.\n"
+                    + "Elle vous attaque avec ses ombres mais vous êtes préparé.\n");
+                          
+        String nomMonstre7 = "Valentine";
+        System.out.println("Vous est attaqué par " + nomMonstre7 + ". Vous devez le combattre pour continuer votre périple.");
+        System.out.println("Début du combat \n");
+        IA monstre7 = new IA(nomMonstre7, 25, 25, 25, 100);
+        Weapon arme10 = new Weapon("ombres tueuses", 0, 10, 0);
+        monstre7.equipWeapon(arme10);
+        Fight combat7 = new Fight(hero, monstre7);
+        //ajouter une fin 
+
     }
 }
-

@@ -43,4 +43,8 @@ public class Gear extends Item {
     public void setDexterity(int dexterity) {
         this.dexterity = dexterity;
     }
+
+    public String getName() {
+        return this.name;
+    }
 }
