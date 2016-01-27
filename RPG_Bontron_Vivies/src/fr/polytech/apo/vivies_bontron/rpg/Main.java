@@ -1,12 +1,22 @@
 package fr.polytech.apo.vivies_bontron.rpg;
 
+import fr.polytech.apo.vivies_bontron.rpg.action.Attack;
+import fr.polytech.apo.vivies_bontron.rpg.action.Block;
+import fr.polytech.apo.vivies_bontron.rpg.action.Effect;
+import fr.polytech.apo.vivies_bontron.rpg.action.Heal;
 import fr.polytech.apo.vivies_bontron.rpg.character.Archer;
+import fr.polytech.apo.vivies_bontron.rpg.character.Caracteristic;
 import fr.polytech.apo.vivies_bontron.rpg.character.Human;
 import fr.polytech.apo.vivies_bontron.rpg.character.IA;
 import fr.polytech.apo.vivies_bontron.rpg.character.LightMage;
 import fr.polytech.apo.vivies_bontron.rpg.character.Warrior;
 import fr.polytech.apo.vivies_bontron.rpg.event.Fight;
+import fr.polytech.apo.vivies_bontron.rpg.event.Round;
+import fr.polytech.apo.vivies_bontron.rpg.item.Consumable;
+import fr.polytech.apo.vivies_bontron.rpg.item.Gear;
 import fr.polytech.apo.vivies_bontron.rpg.item.Weapon;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -42,25 +52,21 @@ public class Main {
             Scanner scanInC = new Scanner(System.in);
             classe = scanInC.nextInt();
         } while (classe != 1 && classe != 2 && classe != 3);
-        switch (classe) {
-            case 1:
-                hero = new Warrior(nom, 7, 7, 5, 50);
-                System.out.println(hero.getInfo());
-                hero.giveEquipmentHuman(hero, "Epée de bois", "Plastron fragile", "Bottes usées", 5, 5, 3, 6, 0, 5, 2);
-                break;
-            case 2:
-                hero = new Archer(nom, 9, 10, 3, 45);
-                System.out.println(hero.getInfo());
-                hero.giveEquipmentHuman(hero, "Arc de bois", "Chemise en cuir", "Bottes en cuir", 4, 4, 2, 9, 0, 3, 4);
-                break;
-            case 3:
-                hero = new LightMage(nom, 5, 9, 7, 40);
-                System.out.println(hero.getInfo());
-                Weapon arme3 = new Weapon("Bâton cristalisé faible", 4, 2, 10);
-                hero.giveEquipmentHuman(hero, "Bâton gemme faible", "Toge de chanvre", "Bottes en tissu", 4, 2, 1, 2, 10, 2, 3);
-                break;
-            default:
-                break;
+        if (classe == 1) {
+            hero = new Warrior(nom, 7, 7, 5, 50);
+            System.out.println(hero.getInfo());
+            hero.giveEquipmentHuman(hero, "Epée de bois", "Plastron fragile", "Bottes usées", 5, 5, 3, 6, 0, 5, 2);
+        } else if (classe == 2) {
+            hero = new Archer(nom, 9, 10, 3, 45);
+            System.out.println(hero.getInfo());
+            hero.giveEquipmentHuman(hero, "Arc de bois", "Chemise en cuir", "Bottes en cuir", 4, 4, 2, 9, 0, 3, 4);
+
+        } else if (classe == 3) {
+            hero = new LightMage(nom, 5, 9, 7, 40);
+            System.out.println(hero.getInfo());
+            Weapon arme3 = new Weapon("Bâton cristalisé faible", 4, 2, 10);
+            hero.giveEquipmentHuman(hero, "Bâton gemme faible", "Toge de chanvre", "Bottes en tissu", 4, 2, 1, 2, 10, 2, 3);
+
         }
 
         // Ecriture du scénario pour arriver sur le premier combat
@@ -68,7 +74,7 @@ public class Main {
                 + "Nul doute que ses sous-fifres vont vous barrer la route. Vous devrez les défaire, un par un.\n"
                 + "Alors que l'effroi vous envahi, votre première adversaire vous aggresse.\n");
 
-        String nomMonstre1 = "Rat carnivore";
+        String nomMonstre1 = "Rat carnivore";//="nom du monstre"
         System.out.println("Vous est attaqué par " + nomMonstre1 + ". Vous devez le combattre pour continuer votre périple.");
         System.out.println("Début du combat \n");
         IA monstre1 = new IA(nomMonstre1, 3, 10, 3, 30);
@@ -81,11 +87,12 @@ public class Main {
         System.out.println("A peine remis de votre victoire, un deuxième ennemi tente de vous lacérer par surprise, quelques mètres plus loin.\n"
                 + "Esquivant le coup fatal de justesse, vous vous mettez en position de combat. Vous savez désormais ce que vous avez à faire.\n");
 
-        String nomMonstre2 = "Ours griffe de sabre";
+        String nomMonstre2 = "Ours griffe de sabre";//="nom du monstre"
         System.out.println("Vous est attaqué par " + nomMonstre2 + ". Vous devez le combattre pour continuer votre périple.");
         System.out.println("Début du combat \n");
         IA monstre2 = new IA(nomMonstre2, 6, 8, 6, 60);
         monstre2.giveEquipmentIA(monstre2, "Griffes acérées", 8);
+        
         Fight combat2 = new Fight(hero, monstre2);
         nbCombat++;
         hero.amelioration(nbCombat);
@@ -94,56 +101,34 @@ public class Main {
                  + "Vous reprenez votre souffle et regagnez votre sang froid. Tellement, que vos paupières deviennent lourdes. La torpeur vous assaillit et vous ne la combattez pas...\n"
                  + "Soudainement, vous sentez sur votre peau une brise qui vous donne la chair de poule, comme à chaque que fois que le mal vous approche. Il ne vous faut pas plus de temps pour vous mettre sur vos pieds\n"
                  + "et remarquer qu'une nouvelle créature lorgne votre mort. Le son d'un hurlement d'ogre enragé parvient à vos oreilles et avec lui, le glas d'un nouveau combat.\n");
-        
-         String nomMonstre3 = "Ogre";
+        String nomMonstre3 = "Ogre";//="nom du monstre"
         System.out.println("Vous est attaqué par " + nomMonstre3 + ". Vous devez le combattre pour continuer votre périple.");
         System.out.println("Début du combat \n");
         IA monstre3 = new IA(nomMonstre3, 10, 10, 9, 65);
         monstre2.giveEquipmentIA(monstre3, "Gourdin énorme", 9);
         Fight combat3 = new Fight(hero, monstre3);
-        nbCombat++;
-        hero.amelioration(nbCombat);
+        //nbCombat++;
+        //hero.amelioration(nbCombat); ajouter les nouveaux équipements Human
 
-        String nomMonstre4 = "Dragon des cavernes";
+        String nomMonstre4 = "Dragon des cavernes";//="nom du monstre"
         System.out.println("Vous est attaqué par " + nomMonstre4 + ". Vous devez le combattre pour continuer votre périple.");
         System.out.println("Début du combat \n");
         IA monstre4 = new IA(nomMonstre4, 15, 12, 13, 80);
         Weapon arme9 = new Weapon("Flames bleues", 0, 8, 0);
         monstre4.equipWeapon(arme9);
         Fight combat4 = new Fight(hero, monstre4);
-        nbCombat++;
-        hero.amelioration(nbCombat);
-        
-        String nomMonstre5 = "Lion à deux têtes";
+        //nbCombat++;
+        //hero.amelioration(nbCombat); ajouter les nouveaux équipements Human
+
+        String nomMonstre5 = "Valentine";//="nom du monstre"
         System.out.println("Vous est attaqué par " + nomMonstre5 + ". Vous devez le combattre pour continuer votre périple.");
         System.out.println("Début du combat \n");
-        IA monstre5 = new IA(nomMonstre5, 18, 10, 11, 85);
-        Weapon arme11 = new Weapon("crocs accéreés", 0, 8, 3);
-        monstre5.equipWeapon(arme11);
-        Fight combat5 = new Fight(hero,monstre5);
-        nbCombat++;
-        hero.amelioration(nbCombat);
-        
-        String nomMonstre6 = "Gardien du Palais noir";
-        System.out.println("Vous est attaqué par " + nomMonstre6 + ". Vous devez le combattre pour continuer votre périple.");
-        System.out.println("Début du combat \n");
-        IA monstre6 = new IA(nomMonstre6, 20, 13, 12, 90);
-        Weapon arme12 = new Weapon("Epée du démon", 0, 9, 4);
-        monstre6.equipWeapon(arme12);
-        Fight combat6 = new Fight(hero,monstre6);
-        nbCombat++;
-        hero.amelioration(nbCombat);
-
-         System.out.println("Le reste de la route se déroule sans réel soucis. Le Palais Noir vous tend les portes et Valentine vous dévisage assise sur son trône.\n"
-                    + "Elle vous attaque avec ses ombres mais vous êtes préparé.\n");
-                          
-        String nomMonstre7 = "Valentine";
-        System.out.println("Vous est attaqué par " + nomMonstre7 + ". Vous devez le combattre pour continuer votre périple.");
-        System.out.println("Début du combat \n");
-        IA monstre7 = new IA(nomMonstre7, 25, 25, 25, 100);
+        IA monstre5 = new IA(nomMonstre4, 25, 25, 25, 100);
         Weapon arme10 = new Weapon("ombres tueuses", 0, 10, 0);
-        monstre7.equipWeapon(arme10);
-        Fight combat7 = new Fight(hero, monstre7);
+        monstre4.equipWeapon(arme10);
+        Fight combat5 = new Fight(hero, monstre5);
+        //nbCombat++;
+        //hero.amelioration(nbCombat); ajouter les nouveaux équipements Human
         //ajouter une fin 
 
     }

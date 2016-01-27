@@ -5,7 +5,7 @@ import fr.polytech.apo.vivies_bontron.rpg.character.Caracteristic;
 
 public class Item {
 
-    protected String name;
+    private final String name;
 
     private final int weigth;
 
